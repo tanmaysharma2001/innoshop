@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "start:dev": "nodemon index.js",
-    "start:prod": "NODE_ENV=production nodemon index.js"
+    "start:prod": "NODE_ENV=production nodemon index.js",
+    "debug": "ndb index.js"
   },
   "keywords": [],
   "author": "Tanmay Sharma",
