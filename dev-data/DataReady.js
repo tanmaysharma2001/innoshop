@@ -45,6 +45,14 @@ for (let i = 0; i < files.length; i++) {
 
 // console.log(newset);
 
+function renameKey ( obj, oldKey, newKey ) {
+  obj[newKey] = obj[oldKey];
+  delete obj[oldKey];
+}
+
+products.forEach( obj => renameKey( obj, 'id', 'photoID' ) );
+
+// const updatedJsonProducts = JSON.stringify( products );
 
 fs.writeFile(
     `${__dirname}/products.json`,

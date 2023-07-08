@@ -14,7 +14,15 @@ process.on('unhandledRejection', (err) => {
 
 const app = require('./app');
 
-const DB = process.env.DATABASE_URI.replace(
+
+// Database Configuration
+
+const DATABASE_URI =
+  process.env.NODE_ENV === 'test'
+    ? process.env.TEST_DATABASE_URI
+    : process.env.DATABASE_URI;
+
+const DB = DATABASE_URI.replace(
   '<PASSWORD>',
   process.env.DATABASE_PASSWORD
 );
@@ -41,3 +49,5 @@ process.on('unhandledRejection', (err) => {
     process.exit(1);
   });
 });
+
+module.exports = app;

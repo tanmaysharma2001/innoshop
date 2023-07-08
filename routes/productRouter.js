@@ -9,7 +9,11 @@ const authController = require('../controllers/authController');
 router
   .route('/')
   .get(productController.getProducts)
-  .post(authController.protect, productController.postProduct);
+  .post(
+    authController.protect,
+    authController.restrictTo('admin'),
+    productController.postProduct
+  );
 
 router
   .route('/:id')
