@@ -1,7 +1,35 @@
+const fs = require('fs');
 const Product = require('../models/productModel');
 const APIFeatures = require('../utils/apiFeatures');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
+
+const currentPhotoID = async () => {
+  const maxPhotoIDDocument = await Product.find()
+    .sort({ photoID: -1 })
+    .limit(1);
+
+  const maxPhotoID = maxPhotoIDDocument[0].photoID;
+
+  const id = Number(maxPhotoID) + 1;
+
+  return id;
+};
+
+function getFileExtension(filename) {
+  // Get the last index of the dot character
+  const dotIndex = filename.lastIndexOf('.');
+
+  if (dotIndex === -1 || dotIndex === filename.length - 1) {
+    // If no dot character found or dot is the last character, return an empty string
+    return '';
+  }
+
+  // Extract the substring from the dot character to the end of the string
+  const extension = filename.slice(dotIndex + 1);
+
+  return extension;
+}
 
 // Product Controllers
 const getProducts = catchAsync(async (req, res, next) => {
@@ -24,13 +52,8 @@ const getProducts = catchAsync(async (req, res, next) => {
 });
 
 const postProduct = catchAsync(async (req, res, next) => {
-  const maxPhotoIDDocument = await Product.find()
-    .sort({ photoID: -1 })
-    .limit(1);
 
-  const maxPhotoID = maxPhotoIDDocument[0].photoID;
-
-  req.body.photoID = Number(maxPhotoID) + 1;
+  req.body.photoID = currentPhotoID();
 
   const newProduct = await Product.create(req.body);
 
@@ -92,10 +115,33 @@ const deleteProductWithID = catchAsync(async (req, res, next) => {
   });
 });
 
+const addImage = catchAsync(async (req, res, next) => {
+  const currentID = await currentPhotoID();
+
+  console.log(currentID);
+
+  const tmp_path = `uploads/${req.file.filename}`;
+
+  const extension = getFileExtension(req.file.filename);
+
+  const target_path = `dev-data/Images/${currentID}.${extension}`;
+
+  var src = fs.createReadStream(tmp_path);
+  var dest = fs.createWriteStream(target_path);
+  src.pipe(dest);
+  src.on('end', () => {
+    res.status(200).send();
+  });
+  src.on('error', (err) => {
+    res.status(500).send();
+  });
+});
+
 module.exports = {
   getProducts,
   getProductWithID,
   postProduct,
   updateProductWithID,
   deleteProductWithID,
+  addImage,
 };
