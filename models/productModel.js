@@ -9,7 +9,7 @@ const productSchema = new mongoose.Schema({
   addition_time: {
     type: Date,
     default: Date.now(),
-    select: false,
+    // select: false,
   },
   name: {
     type: String,

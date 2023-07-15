@@ -12,6 +12,7 @@ const xss = require('xss-clean');
 const app = express();
 const productRouter = require('./routes/productRouter');
 const userRouter = require('./routes/userRouter');
+const bookingRouter = require('./routes/bookingRouter');
 
 app.use(cors());
 
@@ -66,6 +67,7 @@ app.use((req, res, next) => {
 // Routes
 app.use('/api/v1/products', productRouter);
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/bookings', bookingRouter);
 
 // Unhandled Routes
 // always at the end of all routes
