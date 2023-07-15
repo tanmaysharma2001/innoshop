@@ -53,8 +53,6 @@ const getProducts = catchAsync(async (req, res, next) => {
 
 const postProduct = catchAsync(async (req, res, next) => {
 
-  req.body.photoID = currentPhotoID();
-
   const newProduct = await Product.create(req.body);
 
   res.status(201).json({
