@@ -85,9 +85,13 @@ exports.createBookingCheckout = catchAsync(async (req, res, next) => {
   res.redirect('http://localhost:3000/success');
 });
 
-
 exports.getPurchasedItems = async (req, res, next) => {
+
+  console.log('ahdbasjd');
+
   const id = req.params.id;
+
+  console.log(id);
 
   const products = await Booking.find({ user: id });
 
@@ -95,6 +99,6 @@ exports.getPurchasedItems = async (req, res, next) => {
 
   res.send(200).json({
     status: 'success',
-    products
+    products,
   });
-}
+};

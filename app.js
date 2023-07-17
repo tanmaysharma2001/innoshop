@@ -14,6 +14,8 @@ const app = express();
 const productRouter = require('./routes/productRouter');
 const userRouter = require('./routes/userRouter');
 const bookingRouter = require('./routes/bookingRouter');
+const swaggerUi = require('swagger-ui-express')
+const swaggerFile = require('./swagger_output.json')
 
 app.use(cors());
 
@@ -71,6 +73,8 @@ app.use('/', bookingController.createBookingCheckout);
 app.use('/api/v1/products', productRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/bookings', bookingRouter);
+
+app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 // Unhandled Routes
 // always at the end of all routes

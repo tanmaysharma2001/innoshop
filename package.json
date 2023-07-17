@@ -8,7 +8,8 @@
     "start:dev": "cross-env NODE_ENV=development nodemon index.js",
     "start:prod": "cross-env NODE_ENV=production nodemon index.js",
     "debug": "ndb index.js",
-    "test": "cross-env NODE_ENV=test jest --verbose --runInBand"
+    "test": "cross-env NODE_ENV=test jest --verbose --runInBand",
+    "swagger-autogen": "node swagger.js"
   },
   "keywords": [],
   "author": "Tanmay Sharma",
@@ -31,6 +32,8 @@
     "nodemon": "^2.0.22",
     "slugify": "^1.6.6",
     "stripe": "^12.13.0",
+    "swagger-autogen": "^2.23.5",
+    "swagger-ui-express": "^5.0.0",
     "validator": "^13.9.0",
     "xss-clean": "^0.1.4"
   },
