@@ -8,6 +8,7 @@ const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
+const bookingController = require('./controllers/bookingController');
 
 const app = express();
 const productRouter = require('./routes/productRouter');
@@ -36,7 +37,7 @@ const limiter = rateLimit({
 app.use('/api', limiter);
 
 // body parser, reading data from body into req.body
-app.use(express.json({ limit: '10kb' }));
+app.use(express.json({ limit: '500kb' }));
 
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
@@ -62,6 +63,8 @@ app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   next();
 });
+
+app.use('/', bookingController.createBookingCheckout);
 
 // Routes
 app.use('/api/v1/products', productRouter);
