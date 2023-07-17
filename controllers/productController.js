@@ -122,13 +122,15 @@ const addImage = catchAsync(async (req, res, next) => {
 
   const extension = getFileExtension(req.file.filename);
 
-  const target_path = `dev-data/Images/${currentID}.${extension}`;
+  const target_path = `dev-data/Images/${currentID}`;
 
   var src = fs.createReadStream(tmp_path);
   var dest = fs.createWriteStream(target_path);
   src.pipe(dest);
   src.on('end', () => {
-    res.status(200).send();
+    res.status(200).json({
+      id: currentID,
+    });
   });
   src.on('error', (err) => {
     res.status(500).send();

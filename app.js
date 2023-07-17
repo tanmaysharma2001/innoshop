@@ -58,7 +58,6 @@ app.use(xss());
 
 // serving static files
 const dir = path.join(__dirname, 'dev-data/Images');
-
 app.use(express.static(dir));
 
 // request time middleware
