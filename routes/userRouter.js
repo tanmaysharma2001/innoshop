@@ -1,6 +1,7 @@
 const express = require('express');
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
+const cartController = require('../controllers/cartController');
 
 const router = express.Router();
 
@@ -9,6 +10,10 @@ router.post('/login', authController.login);
 
 router.post('/forgotPassword', authController.forgotPassword);
 router.patch('/resetPassword/:token', authController.resetPassword);
+
+router
+  .post('/cart', authController.protect, cartController.addToCart)
+  .get('/cart', authController.protect, cartController.getCartItems);
 
 router.patch(
   '/updateMyPassword',
