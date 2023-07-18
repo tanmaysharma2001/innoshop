@@ -1,0 +1,29 @@
+name: Deployment pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  simple_deployment_pipeline:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - name: Install dependencies
+        run: npm install
+      - name: Product API testing
+        run: npm test -- tests/product_api.test.js
+        env:
+          NODE_ENV: 'development'
+          PORT: 3001
+          DATABASE_URI: 'mongodb+srv://sharmatanmay617:<PASSWORD>@cluster0.rjaoqxa.mongodb.net/innoshop-app?retryWrites=true&w=majority'
+          TEST_DATABASE_URI: 'mongodb+srv://sharmatanmay617:<PASSWORD>@cluster0.rjaoqxa.mongodb.net/test-innoshop-app?retryWrites=true&w=majority'
+          DATABASR_LOCAL: ${{ secrets.PG_PASSWORD }}
+          DATABASE_PASSWORD: ${{ secrets.PG_DATABASE }}
+          JWT_SECRET: 'khush-acha-insaan-nahi-hai'
+          JWT_EXPIRES_IN: '90d'
+          JWT_COOKIE_EXPIRES_IN: 90
