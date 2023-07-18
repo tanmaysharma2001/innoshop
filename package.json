@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "start:dev": "NODE_ENV=development nodemon index.js",
-    "start:prod": "NODE_ENV=production nodemon index.js",
+    "start:dev": "cross-env NODE_ENV=development nodemon index.js",
+    "start:prod": "cross-env NODE_ENV=production nodemon index.js",
     "debug": "ndb index.js",
     "test": "cross-env NODE_ENV=test jest --verbose --runInBand",
     "swagger-autogen": "node swagger.js"

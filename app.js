@@ -30,13 +30,13 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // limir requests from same IP
-const limiter = rateLimit({
-  max: 100,
-  windowMs: 60 * 60 * 1000,
-  message: 'Too many requests fromt this IP, please try again later!',
-});
+// const limiter = rateLimit({
+//   max: 100,
+//   windowMs: 60 * 60 * 1000,
+//   message: 'Too many requests fromt this IP, please try again later!',
+// });
 
-app.use('/api', limiter);
+// app.use('/api', limiter);
 
 // body parser, reading data from body into req.body
 app.use(express.json({ limit: '500kb' }));

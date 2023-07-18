@@ -46,7 +46,7 @@
         }
       }
     },
-    "/getItems/{id}": {
+    "/bookings/getItems/{id}": {
       "get": {
         "description": "",
         "parameters": [

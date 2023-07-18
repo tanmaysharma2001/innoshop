@@ -2,7 +2,7 @@ const Product = require('../models/productModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const Booking = require('../models/purchaseModel');
+const Purchase = require('../models/purchaseModel');
 const users = require('../models/userModel');
 
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
@@ -71,7 +71,7 @@ exports.createBookingCheckout = catchAsync(async (req, res, next) => {
   console.log(prices);
 
   for (let i = 0; i < products.length; i++) {
-    await Booking.create({
+    await Purchase.create({
       product: products[i],
       user: user,
       price: Number(prices[i]),
@@ -85,20 +85,18 @@ exports.createBookingCheckout = catchAsync(async (req, res, next) => {
   res.redirect('http://localhost:3000/success');
 });
 
-exports.getPurchasedItems = async (req, res, next) => {
-
-  console.log('ahdbasjd');
+exports.getPurchasedItems = catchAsync(async (req, res, next) => {
 
   const id = req.params.id;
 
   console.log(id);
 
-  const products = await Booking.find({ user: id });
+  const products = await Purchase.find({ user: id });
 
   console.log(products);
 
-  res.send(200).json({
+  res.status(200).json({
     status: 'success',
     products,
   });
-};
+});

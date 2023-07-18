@@ -33,12 +33,12 @@ const purchaseSchema = new mongoose.Schema({
   },
 });
 
-purchaseSchema.pre(/^find/, function(next) {
-  this.populate('user').populate({
-    path: 'product',
-    select: 'name',
-  });
-});
+// purchaseSchema.pre(/^find/, function(next) {
+//   this.populate('user').populate({
+//     path: 'product',
+//     select: 'name',
+//   });
+// });
 
 const Purchase = mongoose.model('Purchase', purchaseSchema);
 
